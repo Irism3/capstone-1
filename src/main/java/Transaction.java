@@ -20,7 +20,7 @@ public class Transaction {
 
     }
 
-    //Getters for everything (so it will read details)
+    //Getters for everything (so it will read details of the transaction)
     public LocalDate getTransactionsDate() {
         return transactionsDate;
     }
@@ -40,10 +40,23 @@ public class Transaction {
     public Double getAmount() {
         return amount;
     }
+
     // No Setters - I don't want to change a transaction after it's created
+
+    //Created a toString() to display a transaction in a readable format
     @Override
-    public String toString(){
-        return
+    public String toString() {
+        return transactionsDate +
+                ", " + transactionsTime +
+                ", " + description +
+                ", " + vendor +
+                ", " + amount;
+
     }
 
+
+
 }
+
+
+
