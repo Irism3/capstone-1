@@ -4,16 +4,17 @@ import java.time.LocalTime;
 public class Transaction {
 
     //creating my  private fields (encapsulation)
-    public LocalDate transactionsDate;
-    public LocalTime transactionsTime;
-    public String description;
-    public String vendor;
-    public Double amount;
+    private LocalDate transactionsDate;
+    private LocalTime transactionsTime;
+    private String description;
+    private String vendor;
+    private Double amount;
 
     //Constructor that takes all my values
-    public Transaction(LocalDate transactionsDate, LocalTime transactionsTime, String description, String vendor, Double amount) {
-        this.transactionsDate = transactionsDate;
-        this.transactionsTime = transactionsTime;
+    //parse the date and time to Strings
+    public Transaction(String dateString, String timeString, String description, String vendor, Double amount) {
+        this.transactionsDate =LocalDate.parse(dateString);
+        this.transactionsTime = LocalTime.parse(timeString);
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
