@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TransactionManager {
-
+//make a file writer
     //ArrayList to store all Transactions objects
     private ArrayList<Transaction> transactions;
 
