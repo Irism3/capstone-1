@@ -9,9 +9,8 @@ public class Main {
         boolean isRunning = true;
         int choice;
 
-//make while loop until a person makes an exit
+//made while loop until a person makes an exit
         while (!exit) {
-
 
             System.out.println("--------------------");
             System.out.println("   Home Screen  ");
@@ -36,18 +35,10 @@ public class Main {
                     ledger();
                     break;
                 case 4:
-                    exit=true;
-
+                    exit = true;
 
             }
         }
-
-        //get and process user choices
-
-
-        //deposit()
-
-
     }
 
     private static void ledger() {

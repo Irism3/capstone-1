@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -29,7 +26,9 @@ public class TransactionManager {
     }
 
     public void loadTransactionFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
+        FileWriter writer = new FileWriter("transactions.csv");
+        writer.write("\\|");
             String line;
             reader.readLine(); //skips the header line
 
@@ -52,6 +51,7 @@ public class TransactionManager {
                 Transaction t = new Transaction(date, time, description, vendor, amount);
                 transactions.add(t);
             }
+            writer.close();
 
         } catch (IOException e) {
             System.out.println("Error reading a file:" + e.getMessage());
