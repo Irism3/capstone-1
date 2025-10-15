@@ -6,12 +6,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
         boolean exit = false;
-        boolean isRunning = true;
+        boolean isRunning = true;  //keeps program running until user exits
         int choice;
+        Double deposit;
 
-//made while loop until a person makes an exit
+
+        //made while loop until a person makes an exit
         while (!exit) {
-
+            //Home Screen
             System.out.println("--------------------");
             System.out.println("   Home Screen  ");
             System.out.println("---------------------");
@@ -21,15 +23,15 @@ public class Main {
             System.out.println("4).Exit");
             System.out.println("---------------------");
 
-            System.out.println("Enter your choice 1-4");
+            System.out.print("Enter your choice 1-4: ");
             choice = myScanner.nextInt();
 
             switch (choice) {
                 case 1:
-                    addDeposit();
+                    addDeposit(myScanner);
                     break;
                 case 2:
-                    addPayment();
+                    addPayment(myScanner);
                     break;
                 case 3:
                     ledger();
@@ -40,14 +42,22 @@ public class Main {
             }
         }
     }
-
+//Methods for each operation
     private static void ledger() {
+
     }
 
-    private static void addPayment() {
+    private static void addPayment(Scanner myScanner) {
+        System.out.println("Enter Payment: ");
+        Double payment = myScanner.nextDouble();
+        System.out.println("Payment added!");
     }
 
-    private static void addDeposit() {
+    private static void addDeposit(Scanner myScanner) {
+        System.out.println("Enter your deposit: ");
+        Double deposit = myScanner.nextDouble();
+        System.out.println("Deposit added!");
+
     }
 
 
