@@ -27,7 +27,7 @@ public class Transaction {
         return date;
     }
 
-    public void setDate() {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -35,7 +35,7 @@ public class Transaction {
         return time;
     }
 
-    public void setTime() {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -67,8 +67,8 @@ public class Transaction {
     //Created a toString() to display a transaction in a readable format
     @Override
     public String toString() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        return date + "| " + time.format(timeFormatter) + "|" + description + "|" + vendor + "| " + amount;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm:ss");
+        return date + "|" + time.format(timeFormatter) + "|" + description + "|" + vendor + "|" + amount;
 
     }
 
