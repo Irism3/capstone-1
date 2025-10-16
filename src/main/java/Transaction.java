@@ -1,5 +1,6 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
@@ -12,7 +13,7 @@ public class Transaction {
 
     //Constructor that takes all my values
     //parse the date and time to Strings
-    public Transaction( LocalDate date, LocalTime time, String description, String vendor, Double amount) {
+    public Transaction(LocalDate date, LocalTime time, String description, String vendor, Double amount) {
         this.date = date;
         this.time = time;
         this.description = description;
@@ -66,11 +67,8 @@ public class Transaction {
     //Created a toString() to display a transaction in a readable format
     @Override
     public String toString() {
-        return date +
-                ", " + time +
-                ", " + description +
-                ", " + vendor +
-                ", " + amount;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return date + "| " + time.format(timeFormatter) + "|" + description + "|" + vendor + "| " + amount;
 
     }
 

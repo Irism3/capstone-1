@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,7 +8,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
-        //ArrayList<Transaction>loadTransactionsToFile =
+        TransactionManager manager = new TransactionManager();
+
+
+        manager.readTransactionFromFile("src/main/resources/transactions.csv");
+
 
         //Boolean to control when to exit program..
         boolean exit = false;
@@ -41,6 +47,7 @@ public class Main {
                 switch (choice) {
                     case 1: //If user enters 1
                         addDeposit(myScanner); // Call addDeposit method
+                        manager.saveTransactionsToFile("src/main/resources/Transaction.csv");
                         break; //Exit the switch statement
                     case 2: // If user enters 2
                         addPayment(myScanner); // Call addPayment method
@@ -58,28 +65,50 @@ public class Main {
             }
         }
         myScanner.close();
-    }
+        }
 
-    //Methods for each operation
-    //im Re-declaring the scanner
-    private static void ledger() {
-        //Add code to display all transactions history
-    }
+        //Methods for each operation
+        //im Re-declaring the scanner
+        private static void ledger () {
+            //Add code to display all transactions history
+        }
 
-    private static void addPayment(Scanner myScanner) {
-        System.out.println("Enter Payment: ");
-        Double payment = myScanner.nextDouble(); // Reads payment amount as a Double
-        System.out.println("Payment added!");
-        // save payment value to the file or array
-    }
+        private static void addPayment (Scanner myScanner){
+            System.out.println();
+            System.out.println("Enter Payment: ");
+            Double payment = myScanner.nextDouble(); // Reads payment amount as a Double
+            System.out.println("Payment added!");
+            // save payment value to the file or array
+        }
 
-    private static void addDeposit(Scanner myScanner) {
-        System.out.println("Enter your deposit: ");
-        Double deposit = myScanner.nextDouble();
-        System.out.println("Deposit added!");
-        // save payment value to the file or array
+        private static void addDeposit (Scanner myScanner){
+            myScanner.nextLine();
+            System.out.print("Enter the date (yyyy-MM-dd):  ");
+            String dateInput = myScanner.nextLine();
+            LocalDate transactionDate = LocalDate.parse(dateInput);
 
-    }
+            System.out.print("Enter the time (HH:mm:ss): ");
+            String timeInput = myScanner.nextLine();
+            LocalTime transactionTime = LocalTime.parse(timeInput);
+
+
+            System.out.print("Enter description: ");
+            String description = myScanner.nextLine();
+
+            System.out.print("Enter the vendor name: ");
+            String vendor = myScanner.nextLine();
+
+            System.out.print("Enter the deposit amount: ");
+            double amount = myScanner.nextDouble();
+
+            System.out.print("Transaction added!");
+            // save payment value to the file
+
+            Transaction transaction = new Transaction(transactionDate, transactionTime, description, vendor, amount);
+
+
+        }
+
 
 
 }
