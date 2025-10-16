@@ -44,7 +44,7 @@ public class Main {
             String choice = myScanner.nextLine().trim().toUpperCase(); //Reads letter input
 
             //Reads the integer input from user..
-           // choice = myScanner.nextLine();
+            // choice = myScanner.nextLine();
 
             //Switch statement executes different code based on their choice value
             try {
@@ -105,6 +105,7 @@ public class Main {
 
     private static void addDeposit(Scanner myScanner, TransactionManager manager) {
 
+
         System.out.print("Enter the date (yyyy-MM-dd):  ");
         String dateInput = myScanner.nextLine();
         LocalDate transactionDate = LocalDate.parse(dateInput);
@@ -135,13 +136,64 @@ public class Main {
     //Methods for each operation
     //im Re-declaring the scanner
     private static void ledger(Scanner myScanner, TransactionManager manager) {
-        System.out.println("**************");
-        //System.out.println();
+        boolean running = true;
+
+        while (running) {
+            System.out.println("********************");
+            System.out.println("   Ledger Screen    ");
+            System.out.println("********************");
+            System.out.println("A). All ");
+            System.out.println("D). Deposits ");
+            System.out.println("P). Payments ");
+            System.out.println("R). Reports  ");
+            System.out.println("********************");
+
+            System.out.print("Enter your choice A, D, R: ");
+            String choice = myScanner.nextLine().trim().toUpperCase();
+
+            try {
+                switch (choice) {
+                    case "A":
+                        //Displays all entries (newest first)
+                        displayAllEntries();
+                        break;
+                    case "D":
+                        //Display deposits only (newest first)
+                        displayDeposits();
+                        break;
+                    case "P":
+                        //Displays payments only (newest first)
+                        displayPayments();
+                    case "R":
+                        // Go to reports submenu
+                        // REPORTS MENU
+                        break;
+                    case "H":
+                        //Returns home
+                        running = false;
+                    default:
+                        System.out.println("Invalid option. Please try again ");
+                        break;
+
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
 
 
     }
 
+    private static void displayPayments() {
+    }
 
+    private static void displayDeposits() {
+    }
+
+    private static void displayAllEntries() {
+    }
 }
 
 
