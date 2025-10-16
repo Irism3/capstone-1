@@ -4,17 +4,17 @@ import java.time.LocalTime;
 public class Transaction {
 
     //creating my  private fields (encapsulation)
-    private LocalDate transactionsDate;
-    private LocalTime transactionsTime;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String vendor;
     private Double amount;
 
     //Constructor that takes all my values
     //parse the date and time to Strings
-    public Transaction(String dateString, String timeString, String description, String vendor, Double amount) {
-        this.transactionsDate = LocalDate.parse(dateString);
-        this.transactionsTime = LocalTime.parse(timeString);
+    public Transaction( LocalDate date, LocalTime time, String description, String vendor, Double amount) {
+        this.date = date;
+        this.time = time;
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
@@ -22,20 +22,20 @@ public class Transaction {
     }
 
     //Getters for everything (so it will read details of the transaction)
-    public LocalDate getTransactionsDate() {
-        return transactionsDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setTransactionsDate() {
-        this.transactionsDate = transactionsDate;
+    public void setDate() {
+        this.date = date;
     }
 
-    public LocalTime getTransactionsTime() {
-        return transactionsTime;
+    public LocalTime getTime() {
+        return time;
     }
 
-    public void setTransactionsTime() {
-        this.transactionsTime = transactionsTime;
+    public void setTime() {
+        this.time = time;
     }
 
     public String getDescription() {
@@ -66,8 +66,8 @@ public class Transaction {
     //Created a toString() to display a transaction in a readable format
     @Override
     public String toString() {
-        return transactionsDate +
-                ", " + transactionsTime +
+        return date +
+                ", " + time +
                 ", " + description +
                 ", " + vendor +
                 ", " + amount;

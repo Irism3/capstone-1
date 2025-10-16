@@ -4,59 +4,81 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class TransactionManager {
-//make a file writer
+    //make a file writer
     //ArrayList to store all Transactions objects
-    private ArrayList<Transaction> transactions;
+    private static ArrayList<Transaction> loadTransactionFromFile = new ArrayList<Transaction>();
 
-    //Initialized the transaction manager
-    //Constructor and creates an empty ArrayList ready to store transactions
-    public TransactionManager() {
-        transactions = new ArrayList<>();
-
-    }
 
     //added a transaction to the list
-    public void addTransaction(Transaction transaction) {
-        transactions.add(transaction);
+    public static void addTransaction(Transaction transaction) {
+        loadTransactionFromFile.add(transaction);
     }
 
     //Getters to access all transactions
     public ArrayList<Transaction> getTransactions() {
-        return transactions;
+        return loadTransactionFromFile;
     }
 
-    public void loadTransactionFromFile(String filename) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))){
-        FileWriter writer = new FileWriter("transactions.csv");
-        writer.write("\\|");
-            String line;
-            reader.readLine(); //skips the header line
+    public static void loadTransactionFromFile() {
+        // Input file name
+        String fileName = "src/main/resources/transaction.csv";
 
-            //Reads the file line by line until it reaches the end
-            while ((line = reader.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
-            }
-            //splits the line into parts using the pipe character as delimiter
-            String[] parts = line.split("\\|");
+        try {BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/transaction.csv"));
 
-            //making sure I have all fields
-            if (parts.length == 5) {
+            String header = bufferedReader.readLine(); //skips the header line
 
-                String date = parts[0].trim();
-                String time = parts[1].trim();
+
+            while (true) {
+                String line = bufferedReader.readLine();
+                if (line == null) {
+                    break;
+                }
+
+                String[] parts = line.split("\\|");
+
+                LocalDate date = LocalDate.parse(parts[0]);
+                LocalTime time = LocalTime.parse(parts[1]);
                 String description = parts[2].trim();
                 String vendor = parts[3].trim();
                 Double amount = Double.parseDouble(parts[4].trim());
-
                 Transaction t = new Transaction(date, time, description, vendor, amount);
-                transactions.add(t);
+                loadTransactionFromFile.add(t);
             }
-            writer.close();
 
+        } catch (FileNotFoundException e) {
+            System.err.println("File doesn't exist" + e);
         } catch (IOException e) {
-            System.out.println("Error reading a file:" + e.getMessage());
+            System.err.println("Problem reading the file " + e);
         }
 
 
     }
+    public static void saveTransactionsToFile () {
+
+        String fileName = "src/main/resources/transactions.csv";
+
+        try {BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/transaction.csv"));
+
+            writer.write("date|time|description|vendor|amount");
+            writer.newLine();
+
+            for(Transaction t : loadTransactionFromFile) {
+                String line = t.getDate() + "|" + t.getTime() +
+                        "|" + t.getDescription() + "|" + t.getVendor() +
+                        "|" + t.getAmount();
+                writer.write(line);
+                writer.newLine();
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 }
+
+
+
