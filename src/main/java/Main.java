@@ -163,7 +163,7 @@ public class Main {
     // Displays only deposit entries (positive amounts)
     private static void displayDeposits(TransactionManager manager) {
         ArrayList<Transaction> transactions = manager.getTransactions();
-        for (Transaction transaction : transactions) {
+        for (Transaction transaction : transactions) {  //for-each loop
             if (transaction.getAmount() > 0) {
                 System.out.println(transaction);
             }
