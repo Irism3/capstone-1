@@ -4,7 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
-    //creating my  private fields (encapsulation)
+    //creating my  private fields (encapsulation) that stores all transaction data.
     private LocalDate date;
     private LocalTime time;
     private String description;
@@ -64,10 +64,10 @@ public class Transaction {
     }
 
 
-    //Created a toString() to display a transaction in a readable format
+    //Created a toString() to display a transaction in a readable format for my ledger menu
     @Override
     public String toString() {
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("H:mm:ss");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         return date + "|" + time.format(timeFormatter) + "|" + description + "|" + vendor + "|" + amount;
 
     }

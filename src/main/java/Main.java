@@ -8,6 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner myScanner = new Scanner(System.in);
+
+        // Created a TransactionManager to store and handle all transactions
         TransactionManager manager = new TransactionManager();
 
 
@@ -15,17 +17,12 @@ public class Main {
         manager.readTransactionFromFile("src/main/resources/transactions.csv");
 
 
-        //Boolean to control when to exit program..
-        boolean exit = false;
-        // boolean isRunning = true;  //keeps program running until user exits maybe?
-
-        // Variable to store user's menu choice..
-        //int choice;
-        // Double deposit; maybe?
+        //Boolean to control when to exit program
+        boolean running = true;
 
 
-        // Loop continues until user chooses to exit
-        while (!exit) {  // The '!' means NOT, so this reads "while exit is NOT true"..
+        // Main menu loop keeps running until user chooses Exit
+        while (running) {
 
             // Displays the main menu
             System.out.println("--------------------");
@@ -37,54 +34,45 @@ public class Main {
             System.out.println("E).Exit");
             System.out.println("---------------------");
 
-            // Prompt the user for their choice
-            System.out.print("Enter your choice D, P, L, E: ");
+            System.out.print("Enter your choice (D, P, L, E): ");
 
-            // Variable to store user's menu choice..
-            String choice = myScanner.nextLine().trim().toUpperCase(); //Reads letter input
+            // Switch statement decides what to do based on user input
+            String choice = myScanner.nextLine().trim().toUpperCase();
 
-            //Reads the integer input from user..
-            // choice = myScanner.nextLine();
 
             //Switch statement executes different code based on their choice value
             try {
                 switch (choice) {
-                    case "D": //If user enters 1
-                        addDeposit(myScanner, manager); // Call addDeposit method
-                        manager.saveTransactionsToFile("src/main/resources/transaction.csv");
-                        break; //Exit the switch statement
-                    case "P": // If user enters 2
-                        addPayment(myScanner, manager); // Call addPayment method
-                        manager.saveTransactionsToFile("src/main/resources/transaction.csv");
-                        break; //Exit the switch statement
-                    case "L": //if user enters 3
-                        ledger(myScanner, manager); // Call the ledger method
-                        break;  //Exit the switch statement
-                    case "E":  // If user enters 4
-                        exit = true;  // Set exit to true, which will end the while loop
+                    case "D":
+                        addDeposit(myScanner, manager);
+                        manager.saveTransactionsToFile("src/main/resources/transactions.csv");
+                        break;
+                    case "P":
+                        addPayment(myScanner, manager);
+                        manager.saveTransactionsToFile("src/main/resources/transactions.csv");
+                        break;
+                    case "L":
+                        ledger(myScanner, manager);
+                        break;
+                    case "E":
+                        running = false;  // Set exit to true, which will end the while loop
                         break;
                     default:
                         System.out.println("Invalid choice. Please enter D, P, L, or E.\n");
                 }
             } catch (Exception e) {
                 System.out.println(" Invalid try again! " + e);
-                throw new RuntimeException(e);
+
             }
         }
         myScanner.close();
     }
 
+    // Methods for the users choice
     private static void addPayment(Scanner myScanner, TransactionManager manager) {
-        //myScanner.nextLine();
-        System.out.print("Enter the date (yyyy-MM-dd):  ");
-
-        String dateInput = myScanner.nextLine();
-        LocalDate transactionDate = LocalDate.parse(dateInput);
-
-        System.out.print("Enter the time (H:mm:ss): ");
-        String timeInput = myScanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[H:mm[:ss]]");
-        LocalTime transactionTime = LocalTime.parse(timeInput, formatter);
+        // Automatically get today's date and time
+        LocalDate transactionDate = LocalDate.now();
+        LocalTime transactionTime = LocalTime.now();
 
         System.out.print("Enter description: ");
         String description = myScanner.nextLine();
@@ -92,28 +80,20 @@ public class Main {
         System.out.print("Enter the vendor name: ");
         String vendor = myScanner.nextLine();
 
-        System.out.println("Enter Payment amount: ");
+        System.out.print("Enter Payment amount: ");
         double amount = myScanner.nextDouble(); // Reads payment amount as a Double
         amount = amount * -1;
         myScanner.nextLine();
 
-        // save payment value to the file or array
+        // Create a new Transaction and add it to the list
         Transaction transaction = new Transaction(transactionDate, transactionTime, description, vendor, amount);
         manager.addTransaction(transaction);
         System.out.println("Payment added!");
     }
 
     private static void addDeposit(Scanner myScanner, TransactionManager manager) {
-
-
-        System.out.print("Enter the date (yyyy-MM-dd):  ");
-        String dateInput = myScanner.nextLine();
-        LocalDate transactionDate = LocalDate.parse(dateInput);
-
-        System.out.print("Enter the time (H:mm:ss): ");
-        String timeInput = myScanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("[H:mm[:ss]]");
-        LocalTime transactionTime = LocalTime.parse(timeInput, formatter);
+        LocalDate transactionDate = LocalDate.now();
+        LocalTime transactionTime = LocalTime.now();
 
         System.out.print("Enter description: ");
         String description = myScanner.nextLine();
@@ -123,77 +103,83 @@ public class Main {
 
         System.out.print("Enter the deposit amount: ");
         double amount = myScanner.nextDouble();
-        myScanner.nextLine(); //leftover newline
+        myScanner.nextLine();
 
-        // save payment value to the file
         Transaction transaction = new Transaction(transactionDate, transactionTime, description, vendor, amount);
         manager.addTransaction(transaction);
-        System.out.print("Deposit added!\n");
+        System.out.print("Deposit added!");
 
     }
 
-    //Add code to display all transactions history
-    //Methods for each operation
-    //im Re-declaring the scanner
+
     private static void ledger(Scanner myScanner, TransactionManager manager) {
         boolean running = true;
 
         while (running) {
-            System.out.println("********************");
-            System.out.println("   Ledger Screen    ");
-            System.out.println("********************");
+            System.out.println("--------------------");
+            System.out.println("   Ledger Menu    ");
+            System.out.println("--------------------");
             System.out.println("A). All ");
             System.out.println("D). Deposits ");
             System.out.println("P). Payments ");
             System.out.println("R). Reports  ");
-            System.out.println("********************");
+            System.out.println("H). Home (Back to Home Screen) ");
+            System.out.println("--------------------");
 
-            System.out.print("Enter your choice A, D, R: ");
+            System.out.print("Enter your choice (A, D, P, R, H): ");
             String choice = myScanner.nextLine().trim().toUpperCase();
 
             try {
                 switch (choice) {
                     case "A":
-                        //Displays all entries (newest first)
-                        displayAllEntries();
+                        displayAllEntries(manager);
                         break;
                     case "D":
-                        //Display deposits only (newest first)
-                        displayDeposits();
+                        displayDeposits(manager);
                         break;
                     case "P":
-                        //Displays payments only (newest first)
-                        displayPayments();
+                        displayPayments(manager);
                     case "R":
-                        // Go to reports submenu
-                        // REPORTS MENU
+                        Reports.reportMenu(myScanner, manager);
                         break;
                     case "H":
-                        //Returns home
                         running = false;
                     default:
                         System.out.println("Invalid option. Please try again ");
                         break;
-
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                System.err.println("Invalid try again" + e);
             }
-
-
         }
-
-
+    }
+    // Displays all transactions (newest first)
+    private static void displayAllEntries(TransactionManager manager) {
+        ArrayList<Transaction> transactions = manager.getTransactions();
+        for (int i = transactions.size() - 1; i >= 0; i--) {
+            System.out.println(transactions.get(i));
+        }
+    }
+    // Displays only deposit entries (positive amounts)
+    private static void displayDeposits(TransactionManager manager) {
+        ArrayList<Transaction> transactions = manager.getTransactions();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() > 0) {
+                System.out.println(transaction);
+            }
+        }
+    }
+   // Displays only payment entries (negative amounts)
+    private static void displayPayments(TransactionManager manager) {
+        ArrayList<Transaction> transactions = manager.getTransactions();
+        for (Transaction transaction : transactions) {
+            if (transaction.getAmount() < 0) {
+                System.out.println(transaction);
+            }
+        }
     }
 
-    private static void displayPayments() {
-    }
 
-    private static void displayDeposits() {
-    }
-
-    private static void displayAllEntries() {
-    }
 }
 
 
